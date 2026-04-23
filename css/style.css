@@ -1,0 +1,609 @@
+/* To-Do Life Dashboard — styles */
+
+/* ─── Reset & box model ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  /* Colours */
+  --color-bg:        #f5f5f5;
+  --color-surface:   #ffffff;
+  --color-border:    #e0e0e0;
+  --color-text:      #1a1a1a;
+  --color-text-muted:#6b7280;
+  --color-accent:    #7c3aed;
+  --color-accent-hover: #6d28d9;
+  --color-danger:    #dc2626;
+  --color-danger-hover: #b91c1c;
+
+  /* Typography */
+  --font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-size-base:  16px;   /* ≥ 14 px — satisfies Req 8.2 */
+  --font-size-sm:    0.875rem; /* 14 px */
+  --font-size-lg:    1.25rem;
+  --font-size-xl:    2rem;
+  --font-size-2xl:   2.75rem;
+  --line-height:     1.5;
+
+  /* Spacing */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2rem;
+
+  /* Borders */
+  --radius:    0.5rem;
+  --radius-sm: 0.25rem;
+}
+
+/* ─── Dark theme token overrides ────────────────────────────────────────── */
+[data-theme="dark"] {
+  --color-bg:           #1a1a2e;
+  --color-surface:      #2d1f4e;
+  --color-border:       #4a3f6b;
+  --color-text:         #e5e7eb;
+  --color-text-muted:   #9ca3af;
+  --color-accent:       #c4b5fd;
+  --color-accent-hover: #a78bfa;
+  --color-danger:       #f87171;
+  --color-danger-hover: #ef4444;
+}
+
+/* ─── Base ──────────────────────────────────────────────────────────────── */
+html {
+  font-size: var(--font-size-base);
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  /* Prevent horizontal overflow at any viewport width — Req 8.5 */
+  overflow-x: hidden;
+}
+
+/* ─── Layout — four sections stacked in a centred column ────────────────── */
+/* Req 8.1: clearly separated visual sections */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-lg) var(--space-md);
+  gap: var(--space-lg);
+}
+
+section {
+  width: 100%;
+  max-width: 640px;          /* never wider than viewport — Req 8.5 */
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-lg);
+}
+
+/* ─── Greeting Widget ───────────────────────────────────────────────────── */
+#greeting {
+  text-align: center;
+}
+
+#greeting-time {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+}
+
+#greeting-date {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+}
+
+#greeting-message {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-top: var(--space-sm);
+}
+
+/* ─── Focus Timer ───────────────────────────────────────────────────────── */
+#focus-timer {
+  text-align: center;
+}
+
+#timer-display {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-md);
+}
+
+#focus-timer button {
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-lg);
+  margin: 0 var(--space-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+#focus-timer button:hover:not(:disabled) {
+  background-color: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+#focus-timer button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#timer-notification {
+  margin-top: var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-accent);
+  min-height: 1.25rem; /* reserve space so layout doesn't jump */
+}
+
+/* ─── To-Do List ────────────────────────────────────────────────────────── */
+#todo-input-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+#todo-input {
+  flex: 1;
+  min-width: 0;            /* allow shrinking below intrinsic width */
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+#todo-input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+#btn-add-task {
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-accent);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s;
+}
+
+#btn-add-task:hover {
+  background-color: var(--color-accent-hover);
+}
+
+#task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+#task-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg);
+}
+
+#task-list li input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  accent-color: var(--color-accent);
+}
+
+.task-title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-sm);
+  word-break: break-word;
+}
+
+/* Completed task visual distinction — Req 8.5 / Req 4.1 */
+#task-list li.completed .task-title {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+#task-list li.completed {
+  opacity: 0.7;
+}
+
+/* Inline edit input inside a task row */
+#task-list li input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+#task-list li input[type="text"]:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.btn-edit,
+.btn-delete {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-family: inherit;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.btn-edit:hover {
+  background-color: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.btn-delete:hover {
+  background-color: var(--color-danger);
+  color: #fff;
+  border-color: var(--color-danger);
+}
+
+/* ─── Quick Links ───────────────────────────────────────────────────────── */
+#link-input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+#link-label-input,
+#link-url-input {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+#link-label-input:focus,
+#link-url-input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+#btn-add-link {
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-accent);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s;
+}
+
+#btn-add-link:hover {
+  background-color: var(--color-accent-hover);
+}
+
+#link-validation-msg {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+  min-height: 1.25rem;
+  margin-bottom: var(--space-sm);
+}
+
+#link-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.link-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg);
+}
+
+.link-item a {
+  font-size: var(--font-size-sm);
+  color: var(--color-accent);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.link-item a:hover {
+  text-decoration: underline;
+}
+
+.btn-delete-link {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-family: inherit;
+  padding: 0 var(--space-xs);
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.btn-delete-link:hover {
+  color: var(--color-danger);
+}
+
+/* ─── Theme Toggle Bar ──────────────────────────────────────────────────── */
+/* Req 1.1: always visible and accessible from any section */
+#theme-toggle-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-xs) 0;
+  /* Transparent background so it blends with the page bg */
+  background-color: var(--color-bg);
+}
+
+#btn-theme-toggle {
+  font-size: 1.25rem;
+  font-family: inherit;
+  line-height: 1;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+#btn-theme-toggle:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* Req 1.8: visible focus ring using accent colour */
+#btn-theme-toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ─── Name Input Row (Greeting Widget) ──────────────────────────────────── */
+/* Req 2.1: consistent with #todo-input-row pattern */
+#name-input-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+#name-input {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+#name-input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+#btn-set-name {
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-accent);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s;
+}
+
+#btn-set-name:hover {
+  background-color: var(--color-accent-hover);
+}
+
+#btn-set-name:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ─── Duration Input Row (Focus Timer) ──────────────────────────────────── */
+/* Req 3.1: consistent with existing form patterns */
+#duration-input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  flex-wrap: wrap;
+}
+
+#duration-input-row label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+#duration-input {
+  width: 5rem;
+  min-width: 0;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  text-align: center;
+}
+
+#duration-input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+#duration-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#btn-set-duration {
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-accent);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s;
+  /* Override the broad #focus-timer button selector */
+  margin: 0;
+}
+
+#btn-set-duration:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+}
+
+#btn-set-duration:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#btn-set-duration:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+#duration-validation-msg {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+  min-height: 1.25rem;
+  margin-top: var(--space-xs);
+  width: 100%;
+  text-align: center;
+}
+
+/* ─── Responsive — 320 px minimum viewport ──────────────────────────────── */
+/* Req 8.5: no horizontal scrollbar at 320 px */
+@media (max-width: 400px) {
+  body {
+    padding: var(--space-md) var(--space-sm);
+    gap: var(--space-md);
+  }
+
+  section {
+    padding: var(--space-md);
+  }
+
+  #greeting-time,
+  #timer-display {
+    font-size: 2rem;
+  }
+
+  #focus-timer button {
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-xs) var(--space-xs);
+  }
+
+  /* Name input row: stack vertically on narrow viewports */
+  #name-input-row {
+    flex-direction: column;
+  }
+
+  #name-input,
+  #btn-set-name {
+    width: 100%;
+  }
+
+  /* Duration input row: stack vertically on narrow viewports */
+  #duration-input-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #duration-input-row label {
+    text-align: center;
+  }
+
+  #duration-input {
+    width: 100%;
+    text-align: center;
+  }
+
+  #btn-set-duration {
+    width: 100%;
+  }
+
+  #link-input-row {
+    flex-direction: column;
+  }
+
+  #link-label-input,
+  #link-url-input,
+  #btn-add-link {
+    width: 100%;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "todo-life-dashboard",
+  "version": "1.0.0",
+  "description": "To-Do Life Dashboard — plain HTML/CSS/JS single-page app",
+  "scripts": {
+    "test": "vitest --run"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0",
+    "jsdom": "^25.0.0"
+  }
+}

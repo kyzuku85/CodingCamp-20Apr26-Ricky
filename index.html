@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do Life Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+
+    <div id="theme-toggle-bar">
+      <button id="btn-theme-toggle" aria-label="Switch to dark mode">
+        <span id="theme-icon">☀️</span>
+      </button>
+    </div>
+
+    <section id="greeting">
+      <p id="greeting-time">HH:MM</p>
+      <p id="greeting-date">Weekday, DD Month YYYY</p>
+      <p id="greeting-message">Good Morning</p>
+      <div id="name-input-row">
+        <input id="name-input" type="text" placeholder="Your name…" aria-label="Enter your name" />
+        <button id="btn-set-name">Set</button>
+      </div>
+    </section>
+
+    <section id="focus-timer">
+      <p id="timer-display">25:00</p>
+      <button id="btn-start">Start</button>
+      <button id="btn-stop">Stop</button>
+      <button id="btn-reset">Reset</button>
+      <p id="timer-notification" aria-live="polite"></p>
+      <div id="duration-input-row">
+        <label for="duration-input">Duration (min):</label>
+        <input id="duration-input" type="number" min="1" max="99" value="25" aria-label="Timer duration in minutes" />
+        <button id="btn-set-duration">Set</button>
+      </div>
+      <p id="duration-validation-msg" role="alert"></p>
+    </section>
+
+    <section id="todo-list">
+      <div id="todo-input-row">
+        <input id="todo-input" type="text" placeholder="New task…" />
+        <button id="btn-add-task">Add</button>
+      </div>
+      <ul id="task-list"></ul>
+    </section>
+
+    <section id="quick-links">
+      <div id="link-input-row">
+        <input id="link-label-input" type="text" placeholder="Label" />
+        <input id="link-url-input" type="url" placeholder="https://…" />
+        <button id="btn-add-link">Add</button>
+      </div>
+      <p id="link-validation-msg" role="alert"></p>
+      <div id="link-buttons"></div>
+    </section>
+
+    <script src="js/app.js" defer></script>
+  </body>
+</html>
